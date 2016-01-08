@@ -1,14 +1,14 @@
 angular.module('steven').controller('MainController',
-  ['$http', '$filter', '$scope', function($http, $filter, $scope){
+  ['Breed', 'Cat', '$filter', '$scope', function(Breed, Cat, $filter, $scope){
 
-  $http.get('https://stark-harbor-5038.herokuapp.com/breeds')
-    .then(function(response){
-      $scope.breeds = response.data;
+  Breed.getBreeds()
+    .then(function(breeds){
+      $scope.breeds = breeds;
     });
 
-  $http.get('https://stark-harbor-5038.herokuapp.com/cats')
-    .then(function(response){
-      $scope.allCats = response.data;
+  Cat.getCats()
+    .then(function(cats){
+      $scope.allCats = cats;
       $scope.showMatches();
     });
 
@@ -19,10 +19,9 @@ angular.module('steven').controller('MainController',
   };
 
   $scope.addNewCat = function() {
-    $http.post('https://stark-harbor-5038.herokuapp.com/cats', $scope.newCat)
-    .then(function(response){
-      var savedCat = response.data;
+    Cat.create($scope.newCat).then(function(savedCat){
       $scope.allCats.unshift(savedCat);
+      $scope.showMatches();
     });
   };
 
