@@ -1,10 +1,8 @@
 angular.module('steven').controller('MainController',
   ['Breed', 'Cat', '$filter', '$scope', function(Breed, Cat, $filter, $scope){
 
-  Breed.getBreeds()
-    .then(function(breeds){
-      $scope.breeds = breeds;
-    });
+ $scope.breeds = Breed.all();
+ console.log('Breed 1', Breed.find(1));
 
   Cat.getCats()
     .then(function(cats){
@@ -25,4 +23,12 @@ angular.module('steven').controller('MainController',
     });
   };
 
+  $scope.addNewBreed = function() {
+    breed = new Breed($scope.newBreed);
+    breed.save(function(savedBreed){
+      console.log('savedBreed', savedBreed);
+      $scope.breeds.push(savedBreed);
+      $scope.newBreed = null;
+    });
+  }
 }]);
