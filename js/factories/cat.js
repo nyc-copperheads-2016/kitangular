@@ -6,7 +6,7 @@ angular.module('steven').factory('Cat', function($resource) {
       method: 'POST'
     },
     update: {
-      method: 'PATCH' // this method issues a PATCH request
+      method: 'PATCH'
     }
   });
 
